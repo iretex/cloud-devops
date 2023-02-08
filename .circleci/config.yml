@@ -27,7 +27,7 @@ jobs:
       - run: mkdir -p workspace
       - run:
           name: "Say Hello"
-          command: "echo hello world > workspace/output.txt"
+          command: "echo Hello, world! > workspace/output.txt"
       - persist_to_workspace:
           root: workspace
           paths:
