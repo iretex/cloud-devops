@@ -52,7 +52,7 @@ jobs:
       - run:
           name: Print Output File
           command: |
-            cat output.txt
+            cat /tmp/workspace/output.txt
   print_world:
     docker:
       - image: circleci/node:13.8.0
