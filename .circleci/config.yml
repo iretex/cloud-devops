@@ -21,12 +21,15 @@ jobs:
   save_hello_world_output:
     docker:
       - image: circleci/node:13.8.0
+    working_directory: /tmp
+
     steps:
+      - run: mkdir -p workspace
       - run:
           name: "Say Hello"
-          command: "echo hello world > output.txt"
+          command: "echo hello world > workspace/output.txt"
       - persist_to_workspace:
-          root: .
+          root: workspace
           paths:
             - output.txt
   
@@ -36,7 +39,15 @@ jobs:
 
     steps:
       - attach_workspace:
-          at: .
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+
+      - run: |
+          if [[ `cat /tmp/workspace/output.txt` == "Hello, world!" ]]; then
+            echo "It worked!";
+          else
+            echo "Nope!"; exit 1
+          fi
 
       - run:
           name: Print Output File
